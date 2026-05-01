@@ -33,6 +33,10 @@ Tính năng - Mô tả
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6fd8c1bc-4cc7-47ad-91c8-7753aab5608f" />
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1327bf5e-5bac-42e8-b77f-de6a4eca50fe" />
 
+## Video demo
+
+https://transfer.it/t/v2hRU24zELYa
+
 ## Cấu hình API
 
 > Lưu ý: Không bao giờ commit API key thật lên GitHub
