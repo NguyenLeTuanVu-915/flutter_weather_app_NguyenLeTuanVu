@@ -35,7 +35,7 @@ Tính năng - Mô tả
 
 ## Video demo
 
-https://transfer.it/t/v2hRU24zELYa
+[https://transfer.it/t/v2hRU24zELYa](https://drive.google.com/file/d/1vuobRDI3ZARXTCzipZ6bhKV---HHnEiY/view?usp=drive_link)
 
 ## Cấu hình API
 
