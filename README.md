@@ -39,8 +39,6 @@ https://drive.google.com/file/d/1vuobRDI3ZARXTCzipZ6bhKV---HHnEiY/view?usp=drive
 
 ## Cấu hình API
 
-> Lưu ý: Không bao giờ commit API key thật lên GitHub
-
 Bước 1 — Đăng ký API key
 
 1. Truy cập [https://openweathermap.org/](https://openweathermap.org/)
