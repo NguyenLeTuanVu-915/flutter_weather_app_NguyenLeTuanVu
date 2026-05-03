@@ -1,29 +1,26 @@
-// lib/models/weather_model.dart
-// Model cho dữ liệu thời tiết hiện tại từ OpenWeatherMap
-
 class WeatherModel {
-  final int id;                    // ID thành phố
-  final String cityName;           // Tên thành phố
-  final String country;            // Mã quốc gia (VN, US,...)
-  final double temperature;        // Nhiệt độ hiện tại (°C)
-  final double feelsLike;          // Cảm giác như (°C)
-  final double tempMin;            // Nhiệt độ thấp nhất
-  final double tempMax;            // Nhiệt độ cao nhất
-  final int humidity;              // Độ ẩm (%)
-  final double windSpeed;          // Tốc độ gió (m/s)
-  final int windDegree;            // Hướng gió (độ)
-  final String description;        // Mô tả thời tiết
-  final String main;               // Trạng thái chính (Clear, Rain,...)
-  final String iconCode;           // Mã icon thời tiết
-  final int visibility;            // Tầm nhìn xa (m)
-  final int pressure;              // Áp suất khí quyển (hPa)
-  final int cloudiness;            // Độ che phủ mây (%)
-  final DateTime sunrise;          // Thời gian mặt trời mọc
-  final DateTime sunset;           // Thời gian mặt trời lặn
-  final DateTime dateTime;         // Thời gian cập nhật
-  final double latitude;           // Vĩ độ
-  final double longitude;          // Kinh độ
-  final double? rainLastHour;      // Lượng mưa 1 giờ qua (mm)
+  final int id;
+  final String cityName;
+  final String country;
+  final double temperature;
+  final double feelsLike;
+  final double tempMin;
+  final double tempMax;
+  final int humidity;
+  final double windSpeed;
+  final int windDegree;
+  final String description;
+  final String main;
+  final String iconCode;
+  final int visibility;
+  final int pressure;
+  final int cloudiness;
+  final DateTime sunrise;
+  final DateTime sunset;
+  final DateTime dateTime;
+  final double latitude;
+  final double longitude;
+  final double? rainLastHour;
 
   WeatherModel({
     required this.id,
@@ -50,7 +47,6 @@ class WeatherModel {
     this.rainLastHour,
   });
 
-  /// Parse JSON từ API response thành WeatherModel
   factory WeatherModel.fromJson(Map<String, dynamic> json) {
     return WeatherModel(
       id: json['id'] ?? 0,
@@ -84,7 +80,6 @@ class WeatherModel {
     );
   }
 
-  /// Chuyển WeatherModel thành JSON để lưu cache
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -108,13 +103,11 @@ class WeatherModel {
     };
   }
 
-  /// Kiểm tra có phải ban đêm không (dựa trên giờ)
   bool get isNight {
     final now = DateTime.now();
     return now.isBefore(sunrise) || now.isAfter(sunset);
   }
 
-  /// Nhiệt độ làm tròn
   int get tempRounded => temperature.round();
 
   @override

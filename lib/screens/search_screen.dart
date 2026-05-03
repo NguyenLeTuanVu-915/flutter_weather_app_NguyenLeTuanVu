@@ -1,6 +1,3 @@
-// lib/screens/search_screen.dart
-// Màn hình tìm kiếm thành phố
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/weather_provider.dart';
@@ -21,7 +18,6 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    // Tự động focus vào ô tìm kiếm
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNode.requestFocus();
     });
@@ -38,11 +34,10 @@ class _SearchScreenState extends State<SearchScreen> {
     final query = _controller.text.trim();
     if (query.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('⚠️ Vui lòng nhập tên thành phố')),
+        const SnackBar(content: Text('Vui lòng nhập tên thành phố')),
       );
       return;
     }
-    // Trả kết quả về HomeScreen
     Navigator.pop(context, query);
   }
 
@@ -60,7 +55,6 @@ class _SearchScreenState extends State<SearchScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              // ---- Search Bar ----
               Padding(
                 padding: const EdgeInsets.all(AppStyles.screenPadding),
                 child: Row(
@@ -132,26 +126,22 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // ---- Thành phố yêu thích ----
                           if (provider.favorites.isNotEmpty) ...[
-                            _sectionHeader('❤️ Yêu thích'),
+                            _sectionHeader('Yêu thích'),
                             const SizedBox(height: 8),
                             _buildCityList(provider.favorites),
                             const SizedBox(height: 24),
                           ],
 
-                          // ---- Lịch sử tìm kiếm ----
                           if (provider.searchHistory.isNotEmpty) ...[
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                _sectionHeader('🕐 Tìm kiếm gần đây'),
+                                _sectionHeader('Tìm kiếm gần đây'),
                                 TextButton(
                                   onPressed: () async {
-                                    // Xóa lịch sử tìm kiếm
                                     final prefs = await SharedPreferences.getInstance();
                                     await prefs.remove('search_history');
-                                    // Reload lại provider
                                     if (context.mounted) {
                                       context.read<WeatherProvider>().reloadSearchHistory();
                                     }
@@ -168,8 +158,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             const SizedBox(height: 24),
                           ],
 
-                          // ---- Gợi ý thành phố phổ biến ----
-                          _sectionHeader('🌍 Thành phố phổ biến'),
+                          _sectionHeader('Thành phố phổ biến'),
                           const SizedBox(height: 8),
                           _buildCityList(const [
                             'Ho Chi Minh City',

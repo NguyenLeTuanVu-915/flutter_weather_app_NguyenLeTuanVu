@@ -1,6 +1,3 @@
-// lib/screens/forecast_screen.dart
-// Màn hình dự báo chi tiết 5 ngày
-
 import 'package:flutter/material.dart';
 import '../models/forecast_model.dart';
 import '../utils/constants.dart';
@@ -33,7 +30,7 @@ class ForecastScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              // AppBar
+
               Padding(
                 padding: const EdgeInsets.all(AppStyles.screenPadding),
                 child: Row(
@@ -57,7 +54,6 @@ class ForecastScreen extends StatelessWidget {
                 ),
               ),
 
-              // Danh sách
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(
@@ -70,7 +66,7 @@ class ForecastScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         DailyForecastCard(forecast: day),
-                        // Hiển thị dự báo theo giờ của ngày đó khi nhấn
+
                         if (day.hourlyList.isNotEmpty) ...[
                           const SizedBox(height: 8),
                           HourlyForecastList(hourlyList: day.hourlyList.take(8).toList()),

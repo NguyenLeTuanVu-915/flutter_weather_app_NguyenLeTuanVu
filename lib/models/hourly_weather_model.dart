@@ -1,18 +1,15 @@
-// lib/models/hourly_weather_model.dart
-// Model cho dự báo thời tiết theo từng giờ (từ API /forecast)
-
 class HourlyWeatherModel {
-  final DateTime dateTime;       // Thời gian dự báo
-  final double temperature;      // Nhiệt độ (°C)
-  final double feelsLike;        // Cảm giác như (°C)
-  final String description;      // Mô tả thời tiết
-  final String main;             // Trạng thái chính
-  final String iconCode;         // Mã icon
-  final int humidity;            // Độ ẩm (%)
-  final double windSpeed;        // Tốc độ gió (m/s)
-  final int cloudiness;          // Độ che phủ mây (%)
-  final double? rainVolume;      // Lượng mưa 3 giờ (mm)
-  final double popPercent;       // Xác suất mưa (0.0 - 1.0)
+  final DateTime dateTime;
+  final double temperature;
+  final double feelsLike;
+  final String description;
+  final String main;
+  final String iconCode;
+  final int humidity;
+  final double windSpeed;
+  final int cloudiness;
+  final double? rainVolume;
+  final double popPercent;
 
   HourlyWeatherModel({
     required this.dateTime,

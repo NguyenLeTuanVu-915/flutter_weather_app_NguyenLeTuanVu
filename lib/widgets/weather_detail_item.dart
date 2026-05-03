@@ -1,13 +1,10 @@
-// lib/widgets/weather_detail_item.dart
-// Widget hiển thị một mục chi tiết (độ ẩm, gió, áp suất,...)
-
 import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 
 class WeatherDetailItem extends StatelessWidget {
-  final String icon;       // Emoji icon
-  final String label;      // Nhãn (VD: "Độ ẩm")
-  final String value;      // Giá trị (VD: "75%")
+  final String icon;
+  final String label;
+  final String value;
 
   const WeatherDetailItem({
     super.key,

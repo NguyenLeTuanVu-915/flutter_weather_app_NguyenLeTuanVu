@@ -1,12 +1,9 @@
-// lib/widgets/weather_error_widget.dart
-// Widget hiển thị khi có lỗi (mất mạng, API lỗi, city không tìm thấy...)
-
 import 'package:flutter/material.dart';
 
 class WeatherErrorWidget extends StatelessWidget {
-  final String message;          // Thông báo lỗi
-  final VoidCallback? onRetry;   // Callback khi nhấn Thử lại
-  final VoidCallback? onSearch;  // Callback khi nhấn Tìm kiếm
+  final String message;
+  final VoidCallback? onRetry;
+  final VoidCallback? onSearch;
 
   const WeatherErrorWidget({
     super.key,
@@ -17,28 +14,27 @@ class WeatherErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Xác định icon và tiêu đề dựa trên loại lỗi
     String errorIcon;
     String errorTitle;
 
     if (message.contains('internet') || message.contains('kết nối') ||
         message.contains('network')) {
-      errorIcon = '📡';
+      errorIcon = '';
       errorTitle = 'Mất kết nối internet';
     } else if (message.contains('thành phố') || message.contains('city') ||
         message.contains('404')) {
-      errorIcon = '🔍';
+      errorIcon = '';
       errorTitle = 'Không tìm thấy địa điểm';
     } else if (message.contains('API') || message.contains('key') ||
         message.contains('401')) {
-      errorIcon = '🔑';
+      errorIcon = '';
       errorTitle = 'Lỗi xác thực API';
     } else if (message.contains('vị trí') || message.contains('GPS') ||
         message.contains('location')) {
-      errorIcon = '📍';
+      errorIcon = '';
       errorTitle = 'Không thể lấy vị trí';
     } else {
-      errorIcon = '⚠️';
+      errorIcon = '';
       errorTitle = 'Đã xảy ra lỗi';
     }
 
@@ -48,11 +44,9 @@ class WeatherErrorWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Error icon
             Text(errorIcon, style: const TextStyle(fontSize: 64)),
             const SizedBox(height: 16),
 
-            // Error title
             Text(
               errorTitle,
               style: const TextStyle(
@@ -64,7 +58,6 @@ class WeatherErrorWidget extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            // Error message
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -79,7 +72,6 @@ class WeatherErrorWidget extends StatelessWidget {
             ),
             const SizedBox(height: 32),
 
-            // Nút Thử lại
             if (onRetry != null)
               ElevatedButton.icon(
                 onPressed: onRetry,
@@ -101,7 +93,6 @@ class WeatherErrorWidget extends StatelessWidget {
             if (onRetry != null && onSearch != null)
               const SizedBox(height: 12),
 
-            // Nút Tìm kiếm
             if (onSearch != null)
               OutlinedButton.icon(
                 onPressed: onSearch,

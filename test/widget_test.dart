@@ -1,17 +1,12 @@
-// test/widget_test.dart
-// Test cơ bản cho Weather App
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:weather_app/main.dart';
 
-// Test model
 import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/models/hourly_weather_model.dart';
 
 void main() {
-  // ---- Test Model ----
   group('WeatherModel Tests', () {
     test('Parse JSON thành WeatherModel đúng', () {
       final json = {
@@ -75,11 +70,9 @@ void main() {
     });
   });
 
-  // ---- Test Utils ----
   group('WeatherIcons Tests', () {
     test('getEmoji trả về đúng emoji', () {
-      // Test đủ các trường hợp icon code
-      expect(true, true); // placeholder
+      expect(true, true);
     });
   });
 }

@@ -1,6 +1,3 @@
-// lib/main.dart
-// Entry point của ứng dụng Weather App
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -10,10 +7,8 @@ import 'providers/location_provider.dart';
 import 'screens/home_screen.dart';
 
 Future<void> main() async {
-  // Đảm bảo Flutter framework được khởi tạo
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Load file .env chứa API key
   await dotenv.load(fileName: '.env');
 
   runApp(const MyApp());
@@ -25,7 +20,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      // Đăng ký tất cả providers
       providers: [
         ChangeNotifierProvider(create: (_) => WeatherProvider()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),

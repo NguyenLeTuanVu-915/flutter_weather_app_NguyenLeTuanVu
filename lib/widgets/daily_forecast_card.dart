@@ -1,6 +1,3 @@
-// lib/widgets/daily_forecast_card.dart
-// Card hiển thị dự báo thời tiết từng ngày
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../config/api_config.dart';
@@ -26,7 +23,6 @@ class DailyForecastCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Tên ngày
           SizedBox(
             width: 80,
             child: Text(
@@ -39,7 +35,6 @@ class DailyForecastCard extends StatelessWidget {
             ),
           ),
 
-          // Icon thời tiết
           CachedNetworkImage(
             imageUrl: ApiConfig.weatherIconUrl(forecast.iconCode),
             width: 40,
@@ -54,7 +49,6 @@ class DailyForecastCard extends StatelessWidget {
             ),
           ),
 
-          // Xác suất mưa
           const SizedBox(width: 8),
           if (forecast.popPercent > 0.1)
             Text(
@@ -67,7 +61,6 @@ class DailyForecastCard extends StatelessWidget {
 
           const Spacer(),
 
-          // Nhiệt độ min - max
           Row(
             children: [
               Text(
@@ -78,7 +71,6 @@ class DailyForecastCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 4),
-              // Thanh nhiệt độ
               _TempBar(
                 min: forecast.tempMinRounded,
                 max: forecast.tempMaxRounded,
@@ -100,7 +92,6 @@ class DailyForecastCard extends StatelessWidget {
   }
 }
 
-/// Thanh gradient thể hiện khoảng nhiệt độ
 class _TempBar extends StatelessWidget {
   final int min;
   final int max;

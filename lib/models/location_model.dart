@@ -1,11 +1,8 @@
-// lib/models/location_model.dart
-// Model cho dữ liệu vị trí GPS
-
 class LocationModel {
-  final double latitude;   // Vĩ độ
-  final double longitude;  // Kinh độ
-  final String? cityName;  // Tên thành phố (từ geocoding)
-  final String? country;   // Mã quốc gia
+  final double latitude;
+  final double longitude;
+  final String? cityName;
+  final String? country;
 
   LocationModel({
     required this.latitude,

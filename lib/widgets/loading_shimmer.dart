@@ -1,6 +1,3 @@
-// lib/widgets/loading_shimmer.dart
-// Animation hiển thị khi đang tải dữ liệu
-
 import 'package:flutter/material.dart';
 
 class LoadingShimmer extends StatefulWidget {
@@ -42,7 +39,6 @@ class _LoadingShimmerState extends State<LoadingShimmer>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Icon thời tiết giả
               Container(
                 width: 100,
                 height: 100,
@@ -53,7 +49,6 @@ class _LoadingShimmerState extends State<LoadingShimmer>
               ),
               const SizedBox(height: 20),
 
-              // Nhiệt độ giả
               Container(
                 width: 150,
                 height: 80,
@@ -64,7 +59,6 @@ class _LoadingShimmerState extends State<LoadingShimmer>
               ),
               const SizedBox(height: 12),
 
-              // Tên thành phố giả
               Container(
                 width: 180,
                 height: 30,
@@ -75,7 +69,6 @@ class _LoadingShimmerState extends State<LoadingShimmer>
               ),
               const SizedBox(height: 8),
 
-              // Mô tả giả
               Container(
                 width: 120,
                 height: 20,
@@ -86,7 +79,6 @@ class _LoadingShimmerState extends State<LoadingShimmer>
               ),
               const SizedBox(height: 40),
 
-              // Loading indicator
               const CircularProgressIndicator(
                 color: Colors.white,
                 strokeWidth: 2,

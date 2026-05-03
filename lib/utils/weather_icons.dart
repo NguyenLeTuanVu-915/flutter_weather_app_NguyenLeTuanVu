@@ -1,36 +1,29 @@
-// lib/utils/weather_icons.dart
-// Mapping từ weather condition → emoji icon
-
 class WeatherIcons {
-  /// Trả về emoji tương ứng với mã icon từ API
   static String getEmoji(String iconCode) {
-    // iconCode từ API: "01d", "02d", "10n", v.v.
-    // Số: loại thời tiết, chữ: d=ngày, n=đêm
     switch (iconCode.substring(0, 2)) {
-      case '01': // Trời quang
+      case '01':
         return iconCode.endsWith('d') ? '☀️' : '🌙';
-      case '02': // Vài đám mây
+      case '02':
         return iconCode.endsWith('d') ? '⛅' : '🌙';
-      case '03': // Có mây rải rác
+      case '03':
         return '🌤️';
-      case '04': // Trời nhiều mây
+      case '04':
         return '☁️';
-      case '09': // Mưa nhỏ
+      case '09':
         return '🌧️';
-      case '10': // Mưa
+      case '10':
         return iconCode.endsWith('d') ? '🌦️' : '🌧️';
-      case '11': // Sấm sét
+      case '11':
         return '⛈️';
-      case '13': // Tuyết
+      case '13':
         return '❄️';
-      case '50': // Sương mù
+      case '50':
         return '🌫️';
       default:
         return '🌡️';
     }
   }
 
-  /// Mô tả tiếng Việt theo weather main
   static String getVietnameseDescription(String main) {
     switch (main.toLowerCase()) {
       case 'clear':
@@ -55,7 +48,6 @@ class WeatherIcons {
     }
   }
 
-  /// Icon hướng gió dựa trên độ
   static String getWindDirectionIcon(int degree) {
     if (degree >= 337 || degree < 23) return '↑ N';
     if (degree >= 23 && degree < 68) return '↗ NE';

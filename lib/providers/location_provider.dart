@@ -1,6 +1,3 @@
-// lib/providers/location_provider.dart
-// Quản lý trạng thái vị trí GPS
-
 import 'package:flutter/foundation.dart';
 import '../models/location_model.dart';
 import '../services/location_service.dart';
@@ -20,7 +17,6 @@ class LocationProvider extends ChangeNotifier {
   bool get isLoading => _status == LocationStatus.loading;
   bool get hasLocation => _location != null;
 
-  /// Lấy vị trí GPS hiện tại
   Future<void> getCurrentLocation() async {
     _status = LocationStatus.loading;
     _errorMessage = null;

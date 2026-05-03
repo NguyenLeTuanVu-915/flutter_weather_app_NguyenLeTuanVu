@@ -1,6 +1,3 @@
-// lib/widgets/hourly_forecast_list.dart
-// Danh sách dự báo thời tiết theo từng giờ (scroll ngang)
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../config/api_config.dart';
@@ -19,7 +16,7 @@ class HourlyForecastList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('⏱️ Dự báo theo giờ', style: AppStyles.sectionTitle),
+        const Text('Dự báo theo giờ', style: AppStyles.sectionTitle),
         const SizedBox(height: 12),
         SizedBox(
           height: 120,
@@ -51,7 +48,7 @@ class _HourlyItem extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: isFirst
-            ? Colors.white.withOpacity(0.3) // Highlight giờ đầu
+            ? Colors.white.withOpacity(0.3)
             : AppColors.cardBackground,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
@@ -61,7 +58,6 @@ class _HourlyItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          // Thời gian
           Text(
             isFirst ? 'Ngay\nhiện tại' : DateFormatter.formatHour(item.dateTime),
             style: TextStyle(
@@ -72,7 +68,6 @@ class _HourlyItem extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
 
-          // Icon
           CachedNetworkImage(
             imageUrl: ApiConfig.weatherIconUrl(item.iconCode),
             width: 36,
@@ -87,7 +82,6 @@ class _HourlyItem extends StatelessWidget {
             ),
           ),
 
-          // Nhiệt độ
           Text(
             '${item.tempRounded}°',
             style: const TextStyle(
@@ -97,7 +91,6 @@ class _HourlyItem extends StatelessWidget {
             ),
           ),
 
-          // Xác suất mưa
           if (item.popPercent > 0.1)
             Text(
               '💧 ${item.popPercent100}%',

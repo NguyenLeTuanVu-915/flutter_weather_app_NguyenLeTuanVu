@@ -1,6 +1,3 @@
-// lib/widgets/current_weather_card.dart
-// Card hiển thị thời tiết hiện tại (nhiệt độ lớn, icon, mô tả)
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../config/api_config.dart';
@@ -13,14 +10,13 @@ import 'weather_detail_item.dart';
 class CurrentWeatherCard extends StatelessWidget {
   final WeatherModel weather;
   final bool isFromCache;
-  // FIX BUG 2: Nhận ký hiệu đơn vị từ bên ngoài (°C hoặc °F)
   final String tempUnit;
 
   const CurrentWeatherCard({
     super.key,
     required this.weather,
     this.isFromCache = false,
-    this.tempUnit = '°C', // Mặc định Celsius
+    this.tempUnit = '°C',
   });
 
   @override
@@ -45,7 +41,6 @@ class CurrentWeatherCard extends StatelessWidget {
   Widget _buildMainSection() {
     return Column(
       children: [
-        // Icon thời tiết từ API
         CachedNetworkImage(
           imageUrl: ApiConfig.weatherIconUrl(weather.iconCode),
           width: 120,
@@ -60,7 +55,6 @@ class CurrentWeatherCard extends StatelessWidget {
           ),
         ),
 
-        // FIX BUG 2: Dùng tempUnit thay vì hardcode '°C'
         Text(
           '${weather.tempRounded}$tempUnit',
           style: AppStyles.temperatureLarge,

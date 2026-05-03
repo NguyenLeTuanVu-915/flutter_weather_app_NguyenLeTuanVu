@@ -1,10 +1,6 @@
-// lib/utils/date_formatter.dart
-// Các hàm format ngày giờ
-
 import 'package:intl/intl.dart';
 
 class DateFormatter {
-  /// "Thứ 2, 25/04" - dùng cho dự báo ngày
   static String formatDayMonth(DateTime date) {
     final weekday = _getVietnameseWeekday(date.weekday);
     final day = date.day.toString().padLeft(2, '0');
@@ -12,22 +8,18 @@ class DateFormatter {
     return '$weekday, $day/$month';
   }
 
-  /// "14:00" - dùng cho dự báo giờ
   static String formatHour(DateTime date) {
     return DateFormat('HH:mm').format(date);
   }
 
-  /// "25/04/2025 14:00" - dùng cho timestamp đầy đủ
   static String formatFullDateTime(DateTime date) {
     return DateFormat('dd/MM/yyyy HH:mm').format(date);
   }
 
-  /// "05:30 SA" - dùng cho giờ mặt trời mọc/lặn
   static String formatTime(DateTime date) {
     return DateFormat('HH:mm').format(date);
   }
 
-  /// "Hôm nay" / "Ngày mai" / tên thứ
   static String formatRelativeDay(DateTime date) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
@@ -39,7 +31,6 @@ class DateFormatter {
     return _getVietnameseWeekday(date.weekday);
   }
 
-  /// Tên thứ tiếng Việt
   static String _getVietnameseWeekday(int weekday) {
     switch (weekday) {
       case DateTime.monday:
@@ -61,7 +52,6 @@ class DateFormatter {
     }
   }
 
-  /// Cách đây bao lâu: "2 giờ trước"
   static String timeAgo(DateTime date) {
     final diff = DateTime.now().difference(date);
     if (diff.inMinutes < 1) return 'Vừa xong';

@@ -1,6 +1,3 @@
-// lib/providers/weather_provider.dart
-// Quản lý trạng thái của toàn bộ dữ liệu thời tiết trong app
-
 import 'package:flutter/foundation.dart';
 import '../models/weather_model.dart';
 import '../models/forecast_model.dart';
@@ -10,7 +7,6 @@ import '../services/storage_service.dart';
 import '../services/connectivity_service.dart';
 import '../services/location_service.dart';
 
-// Enum 3 trạng thái: đang tải, thành công, lỗi
 enum WeatherStatus { initial, loading, success, error }
 
 class WeatherProvider extends ChangeNotifier {
@@ -19,7 +15,6 @@ class WeatherProvider extends ChangeNotifier {
   final ConnectivityService _connectivityService = ConnectivityService();
   final LocationService _locationService = LocationService();
 
-  // ---- State variables ----
   WeatherStatus _status = WeatherStatus.initial;
   WeatherModel? _currentWeather;
   List<DailyForecastModel> _forecast = [];
@@ -27,11 +22,10 @@ class WeatherProvider extends ChangeNotifier {
   String? _errorMessage;
   String? _currentCity;
   bool _isFromCache = false;
-  String _temperatureUnit = 'metric'; // metric = Celsius, imperial = Fahrenheit
+  String _temperatureUnit = 'metric';
   List<String> _favorites = [];
   List<String> _searchHistory = [];
 
-  // ---- Getters ----
   WeatherStatus get status => _status;
   WeatherModel? get currentWeather => _currentWeather;
   List<DailyForecastModel> get forecast => _forecast;
@@ -46,10 +40,8 @@ class WeatherProvider extends ChangeNotifier {
   List<String> get favorites => _favorites;
   List<String> get searchHistory => _searchHistory;
 
-  // FIX BUG 2: Getter ký hiệu đơn vị để truyền vào widget
   String get tempUnitSymbol => _temperatureUnit == 'metric' ? '°C' : '°F';
 
-  /// Khởi tạo: load settings và thử load dữ liệu cuối
   Future<void> init() async {
     _temperatureUnit = await _storageService.getTemperatureUnit();
     _favorites = await _storageService.getFavorites();
@@ -60,8 +52,6 @@ class WeatherProvider extends ChangeNotifier {
       await fetchWeatherByCity(lastCity, forceRefresh: false);
     }
   }
-
-  // ---- Tải theo tên thành phố ----
 
   Future<void> fetchWeatherByCity(
       String city, {
@@ -88,19 +78,18 @@ class WeatherProvider extends ChangeNotifier {
     }
 
     try {
-      // FIX BUG 3: Gọi 3 API song song thay vì tuần tự → nhanh hơn ~3x
       final results = await Future.wait([
         _weatherService.getCurrentWeatherByCity(
           _currentCity!,
-          unit: _temperatureUnit, // FIX BUG 2: truyền unit
+          unit: _temperatureUnit,
         ),
         _weatherService.getForecastByCity(
           _currentCity!,
-          unit: _temperatureUnit, // FIX BUG 2: truyền unit
+          unit: _temperatureUnit,
         ),
         _weatherService.getHourlyByCity(
           _currentCity!,
-          unit: _temperatureUnit, // FIX BUG 2: truyền unit
+          unit: _temperatureUnit,
         ),
       ]);
 
@@ -109,14 +98,12 @@ class WeatherProvider extends ChangeNotifier {
       final hourly = results[2] as List<HourlyWeatherModel>;
       _hourlyForecast = hourly.take(8).toList();
 
-      // Lưu cache
       await _storageService.cacheWeather(_currentWeather!.toJson());
       await _storageService.cacheForecast(
         hourly.map((h) => h.toJson()).toList(),
       );
       await _storageService.saveLastCity(_currentCity!);
 
-      // Lưu lịch sử tìm kiếm
       await _storageService.saveSearchHistory(_currentCity!);
       _searchHistory = await _storageService.getSearchHistory();
 
@@ -130,25 +117,22 @@ class WeatherProvider extends ChangeNotifier {
     }
   }
 
-  // ---- Tải theo GPS ----
-
   Future<void> fetchWeatherByLocation() async {
     _setLoading();
 
     try {
       final location = await _locationService.getCurrentLocation();
 
-      // FIX BUG 3: Gọi song song
       final results = await Future.wait([
         _weatherService.getCurrentWeatherByCoord(
           location.latitude,
           location.longitude,
-          unit: _temperatureUnit, // FIX BUG 2: truyền unit
+          unit: _temperatureUnit,
         ),
         _weatherService.getForecastByCoord(
           location.latitude,
           location.longitude,
-          unit: _temperatureUnit, // FIX BUG 2: truyền unit
+          unit: _temperatureUnit,
         ),
       ]);
 
@@ -156,10 +140,9 @@ class WeatherProvider extends ChangeNotifier {
       _forecast = results[1] as List<DailyForecastModel>;
       _currentCity = _currentWeather!.cityName;
 
-      // Lấy hourly riêng (cần city name từ weather response)
       final hourly = await _weatherService.getHourlyByCity(
         _currentWeather!.cityName,
-        unit: _temperatureUnit, // FIX BUG 2: truyền unit
+        unit: _temperatureUnit,
       );
       _hourlyForecast = hourly.take(8).toList();
 
@@ -172,8 +155,6 @@ class WeatherProvider extends ChangeNotifier {
       _setError(e.toString().replaceAll('Exception: ', ''));
     }
   }
-
-  // ---- Load từ cache ----
 
   Future<bool> _loadFromCache() async {
     final cachedWeatherJson = await _storageService.getCachedWeather();
@@ -217,8 +198,6 @@ class WeatherProvider extends ChangeNotifier {
     return list;
   }
 
-  // ---- Favorites ----
-
   Future<void> addFavorite(String city) async {
     if (!_favorites.contains(city) && _favorites.length < 5) {
       _favorites.add(city);
@@ -235,22 +214,16 @@ class WeatherProvider extends ChangeNotifier {
 
   bool isFavorite(String city) => _favorites.contains(city);
 
-  // ---- Settings ----
-
-  // FIX BUG 2: Sau khi đổi unit → tự động fetch lại để cập nhật nhiệt độ
   Future<void> setTemperatureUnit(String unit) async {
-    if (_temperatureUnit == unit) return; // Không làm gì nếu không đổi
+    if (_temperatureUnit == unit) return;
     _temperatureUnit = unit;
     await _storageService.saveTemperatureUnit(unit);
     notifyListeners();
 
-    // Fetch lại với đơn vị mới
     if (_currentCity != null) {
       await fetchWeatherByCity(_currentCity!, forceRefresh: true);
     }
   }
-
-  // ---- Refresh ----
 
   Future<void> refresh() async {
     if (_currentCity != null) {
@@ -258,13 +231,10 @@ class WeatherProvider extends ChangeNotifier {
     }
   }
 
-  // FIX BUG 1: Reload search history sau khi xóa
   Future<void> reloadSearchHistory() async {
     _searchHistory = await _storageService.getSearchHistory();
     notifyListeners();
   }
-
-  // ---- State setters ----
 
   void _setLoading() {
     _status = WeatherStatus.loading;

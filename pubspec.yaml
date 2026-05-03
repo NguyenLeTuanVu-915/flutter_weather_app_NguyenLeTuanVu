@@ -10,30 +10,14 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-
-  # HTTP requests
   http: ^1.1.0
-
-  # State management
   provider: ^6.1.1
-
-  # Location services
   geolocator: ^10.1.0
   geocoding: ^2.1.1
-
-  # Local storage / caching
   shared_preferences: ^2.2.2
-
-  # Date formatting
   intl: ^0.18.1
-
-  # Load ảnh từ network
   cached_network_image: ^3.3.0
-
-  # Load file .env
   flutter_dotenv: ^5.1.0
-
-  # Kiểm tra kết nối mạng
   connectivity_plus: ^5.0.2
 
 dev_dependencies:
@@ -43,7 +27,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  # Khai báo file .env là asset
   assets:
     - .env

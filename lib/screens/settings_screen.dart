@@ -1,6 +1,3 @@
-// lib/screens/settings_screen.dart
-// Màn hình cài đặt
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/weather_provider.dart';
@@ -23,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
         child: SafeArea(
           child: Column(
             children: [
-              // AppBar
+
               Padding(
                 padding: const EdgeInsets.all(AppStyles.screenPadding),
                 child: Row(
@@ -52,14 +49,12 @@ class SettingsScreen extends StatelessWidget {
                         horizontal: AppStyles.screenPadding,
                       ),
                       children: [
-                        // ---- Đơn vị nhiệt độ ----
-                        _sectionHeader('🌡️ Đơn vị nhiệt độ'),
+                        _sectionHeader('Đơn vị nhiệt độ'),
                         const SizedBox(height: 8),
                         _buildUnitToggle(context, provider),
                         const SizedBox(height: 24),
 
-                        // ---- Thành phố yêu thích ----
-                        _sectionHeader('❤️ Thành phố yêu thích (${provider.favorites.length}/5)'),
+                        _sectionHeader('Thành phố yêu thích (${provider.favorites.length}/5)'),
                         const SizedBox(height: 8),
                         if (provider.favorites.isEmpty)
                           _buildEmptyCard('Chưa có thành phố yêu thích')
@@ -69,15 +64,13 @@ class SettingsScreen extends StatelessWidget {
                           ),
                         const SizedBox(height: 24),
 
-                        // ---- Thông tin app ----
-                        _sectionHeader('ℹ️ Thông tin'),
+                        _sectionHeader('Thông tin'),
                         const SizedBox(height: 8),
                         _buildInfoCard('Phiên bản', '1.0.0'),
                         _buildInfoCard('API', 'OpenWeatherMap'),
                         _buildInfoCard('Framework', 'Flutter'),
                         const SizedBox(height: 24),
 
-                        // ---- Xóa cache ----
                         _buildClearCacheButton(context, provider),
                       ],
                     );
@@ -119,7 +112,6 @@ class SettingsScreen extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
           ),
-          // Toggle Celsius / Fahrenheit
           Row(
             children: [
               _unitButton(
@@ -236,7 +228,6 @@ class SettingsScreen extends StatelessWidget {
   Widget _buildClearCacheButton(BuildContext context, WeatherProvider provider) {
     return ElevatedButton.icon(
       onPressed: () async {
-        // Hiện dialog xác nhận
         final confirm = await showDialog<bool>(
           context: context,
           builder: (_) => AlertDialog(
@@ -260,7 +251,7 @@ class SettingsScreen extends StatelessWidget {
         );
 
         if (confirm == true && context.mounted) {
-          // TODO: Gọi clearAll từ StorageService
+
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Đã xóa cache thành công')),
           );

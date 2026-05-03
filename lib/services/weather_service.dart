@@ -1,6 +1,3 @@
-// lib/services/weather_service.dart
-// Gọi API OpenWeatherMap và parse dữ liệu
-
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../config/api_config.dart';
@@ -11,24 +8,18 @@ import '../models/forecast_model.dart';
 class WeatherService {
   final http.Client _client;
 
-  // Cho phép inject client (dùng cho testing)
   WeatherService({http.Client? client}) : _client = client ?? http.Client();
 
-  // ---- Thời tiết hiện tại ----
-
-  /// Lấy thời tiết hiện tại theo tên thành phố
   Future<WeatherModel> getCurrentWeatherByCity(String city, {String unit = 'metric'}) async {
     final url = ApiConfig.currentWeatherByCity(city, unit: unit);
     return await _fetchCurrentWeather(url);
   }
 
-  /// Lấy thời tiết hiện tại theo tọa độ GPS
   Future<WeatherModel> getCurrentWeatherByCoord(double lat, double lon, {String unit = 'metric'}) async {
     final url = ApiConfig.currentWeatherByCoord(lat, lon, unit: unit);
     return await _fetchCurrentWeather(url);
   }
 
-  /// Gọi API và parse thời tiết hiện tại (dùng chung)
   Future<WeatherModel> _fetchCurrentWeather(String url) async {
     try {
       final response = await _client
@@ -54,21 +45,16 @@ class WeatherService {
     }
   }
 
-  // ---- Dự báo thời tiết ----
-
-  /// Lấy dự báo 5 ngày theo tên thành phố
   Future<List<DailyForecastModel>> getForecastByCity(String city, {String unit = 'metric'}) async {
     final url = ApiConfig.forecastByCity(city, unit: unit);
     return await _fetchForecast(url);
   }
 
-  /// Lấy dự báo 5 ngày theo tọa độ
   Future<List<DailyForecastModel>> getForecastByCoord(double lat, double lon, {String unit = 'metric'}) async {
     final url = ApiConfig.forecastByCoord(lat, lon, unit: unit);
     return await _fetchForecast(url);
   }
 
-  /// Lấy danh sách HourlyWeatherModel thô (dùng khi cần cache)
   Future<List<HourlyWeatherModel>> getHourlyByCity(String city, {String unit = 'metric'}) async {
     final url = ApiConfig.forecastByCity(city, unit: unit);
     final response = await _client
@@ -86,7 +72,6 @@ class WeatherService {
         .toList();
   }
 
-  /// Gọi API và nhóm theo ngày để tạo DailyForecastModel
   Future<List<DailyForecastModel>> _fetchForecast(String url) async {
     try {
       final response = await _client
@@ -110,7 +95,6 @@ class WeatherService {
     }
   }
 
-  /// Nhóm danh sách hourly thành daily forecast
   List<DailyForecastModel> _groupByDay(List<HourlyWeatherModel> hourlyList) {
     final Map<String, List<HourlyWeatherModel>> grouped = {};
 

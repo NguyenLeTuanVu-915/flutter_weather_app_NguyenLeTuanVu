@@ -1,6 +1,3 @@
-// lib/screens/home_screen.dart
-// Màn hình chính - hiển thị thời tiết và điều hướng
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/weather_provider.dart';
@@ -25,7 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Khởi tạo và tải dữ liệu sau khi widget được build
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<WeatherProvider>().init();
     });
@@ -35,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer<WeatherProvider>(
       builder: (context, provider, _) {
-        // Lấy gradient theo thời tiết
         final gradientColors = provider.currentWeather != null
             ? getWeatherGradient(
           weatherMain: provider.currentWeather!.main,
@@ -45,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
         return Scaffold(
           body: Container(
-            // Gradient background
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
@@ -56,10 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
             child: SafeArea(
               child: Column(
                 children: [
-                  // ---- AppBar tùy chỉnh ----
                   _buildAppBar(context, provider),
 
-                  // ---- Nội dung chính ----
                   Expanded(
                     child: _buildBody(context, provider),
                   ),
@@ -80,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       child: Row(
         children: [
-          // Nút lấy vị trí GPS
           IconButton(
             icon: const Icon(Icons.my_location, color: Colors.white),
             tooltip: 'Lấy vị trí hiện tại',
@@ -91,7 +82,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
           const Spacer(),
 
-          // Tên thành phố (nếu có)
           if (provider.currentCity != null)
             Text(
               provider.currentCity!,
@@ -104,14 +94,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
           const Spacer(),
 
-          // Nút tìm kiếm
           IconButton(
             icon: const Icon(Icons.search, color: Colors.white),
             tooltip: 'Tìm kiếm thành phố',
             onPressed: () => _navigateToSearch(context),
           ),
 
-          // Nút cài đặt
           IconButton(
             icon: const Icon(Icons.settings_outlined, color: Colors.white),
             tooltip: 'Cài đặt',
@@ -205,7 +193,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildSuccessContent(BuildContext context, WeatherProvider provider) {
     return RefreshIndicator(
-      // Pull-to-refresh
       onRefresh: () => provider.refresh(),
       color: Colors.white,
       backgroundColor: Colors.blueAccent,
@@ -215,27 +202,23 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ---- Thời tiết hiện tại ----
             CurrentWeatherCard(
               weather: provider.currentWeather!,
               isFromCache: provider.isFromCache,
-              tempUnit: provider.tempUnitSymbol, // FIX BUG 2: truyền đơn vị °C/°F
+              tempUnit: provider.tempUnitSymbol,
             ),
             const SizedBox(height: 24),
 
-            // ---- Dự báo theo giờ ----
             if (provider.hourlyForecast.isNotEmpty) ...[
               HourlyForecastList(hourlyList: provider.hourlyForecast),
               const SizedBox(height: 24),
             ],
 
-            // ---- Dự báo 5 ngày ----
             if (provider.forecast.isNotEmpty) ...[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('📆 Dự báo 5 ngày', style: AppStyles.sectionTitle),
-                  // Nút xem chi tiết
+                  const Text('Dự báo 5 ngày', style: AppStyles.sectionTitle),
                   TextButton(
                     onPressed: () => Navigator.push(
                       context,
@@ -259,7 +242,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
 
-            // ---- Nút yêu thích ----
             if (provider.currentCity != null) ...[
               const SizedBox(height: 16),
               _buildFavoriteButton(context, provider),
@@ -292,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
             } else {
               provider.addFavorite(city);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Đã thêm $city vào yêu thích ❤️')),
+                SnackBar(content: Text('Đã thêm $city vào yêu thích')),
               );
             }
           }
